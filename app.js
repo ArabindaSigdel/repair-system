@@ -4,14 +4,17 @@ const { mongo, default: mongoose } = require("mongoose");
 const app = express();
 const port = 8000;
 const { MongoClient, ServerApiVersion } = require("mongodb");
+const userRouter = require("./modules/user/user.routes");
 
-//Middle ware for parsing json
+//Middleware for parsing json
 app.use(express.json());
 
-// Basic routes
+//routes
 app.get("/", (req, res) => {
   res.send("Welcome to the repair system");
 });
+
+app.use("/users", userRouter);
 
 app.listen(port, () => {
   console.log(`Server started at:\nhttp://localhost:${port}\n`);
@@ -31,7 +34,7 @@ async function run() {
     await client.connect();
     //Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. DB Connection succesful\n");
+    console.log("Pinged deployment. DB Connection succesful\n");
   } finally {
     await client.close();
   }
