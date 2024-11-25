@@ -9,9 +9,9 @@
  * @param {Object} [options.data=null] - The actual response data.
  * @returns {Object} Standardized API response.
  */
-const apiResponse = ({ status, message, data = null }) => {
+const apiResponse = ({ success, message, data = null }) => {
   return {
-    status,
+    success,
     message,
     data,
   };
