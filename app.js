@@ -16,9 +16,11 @@ app.use(express.json());
 
 // Import routes
 const userRoutes = require("./modules/user/user.routes");
+const vehicleRoutes = require("./modules/vehicle/vehicle.routes");
 
 // Use routes
 app.use("/api/users", userRoutes);
+app.use("/api/vehicles", vehicleRoutes);
 
 // Start the server
 const PORT = process.env.PORT;
