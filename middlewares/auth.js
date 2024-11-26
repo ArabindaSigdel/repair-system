@@ -1,4 +1,5 @@
 const apiResponse = require("../utility/apiResponse");
+const jwt = require("jsonwebtoken");
 
 const auth = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -15,6 +16,7 @@ const auth = (req, res, next) => {
 
   //Check token
   const token = authHeader.split("Bearer ")[1];
+
   try {
     const checkToken = jwt.verify(token, process.env.JWT_SECRET);
     req.user = checkToken;
