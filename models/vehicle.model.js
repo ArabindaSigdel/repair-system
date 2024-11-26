@@ -25,18 +25,22 @@ const vehicleSchema = new mongoose.Schema(
     color: {
       type: String,
       default: "Unknown",
+      required: [true, "Color is required"],
     },
     model: {
       type: String,
       required: [true, "Model is required"],
+    },
+    status: {
+      type: String,
+      enum: ["active", "inactive"],
+      default: "active",
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User", // Reference to the User model
       required: true, // A vehicle must have an owner
     },
-    createdAt: { type: Date, default: Date.now },
-    modifiedAt: { type: Date, default: Date.now },
   },
   { timestamps: true }
 );
