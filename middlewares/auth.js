@@ -1,7 +1,7 @@
 const apiResponse = require("../utility/apiResponse");
 
 const auth = (req, res, next) => {
-  const authHeader = req.head.authorization;
+  const authHeader = req.headers.authorization;
 
   if (!authHeader) {
     return res.status(401).json(
@@ -19,7 +19,7 @@ const auth = (req, res, next) => {
     const checkToken = jwt.verify(token, process.env.JWT_SECRET);
     req.user = checkToken;
   } catch {
-    return req.status(401).json(
+    return res.status(401).json(
       apiResponse({
         success: false,
         message: "Authorization failed",
