@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { User } = require("../../models/index");
-const apiResponse = require("../../../utility/apiResponse");
+const apiResponse = require("../../utility/apiResponse");
 
 /**
  * Login Controller

@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { User } = require("../../../models");
-const apiResponse = require("../../../utility/apiResponse");
+const apiResponse = require("../../utility/apiResponse");
 
 /**
  * Login Controller
@@ -33,6 +33,18 @@ const adminLoginController = async (req, res) => {
           message: "Authentication Failed",
           data: {
             errors: ["Invalid phone number"],
+          },
+        })
+      );
+    }
+
+    if (!user.password) {
+      return res.status(401).json(
+        apiResponse({
+          success: false,
+          message: "Authentication Failed",
+          data: {
+            errors: ["User password does not exist"],
           },
         })
       );
