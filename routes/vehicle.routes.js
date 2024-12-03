@@ -1,8 +1,8 @@
 const express = require("express");
-const auth = require("../../middlewares/auth");
-const addVehicle = require("./controllers/addVehicle");
+const auth = require("../middlewares/auth");
+const addVehicle = require("../controllers/vehicle/addVehicle");
 const { model } = require("mongoose");
-const getVehicle = require("./controllers/getVehicle");
+const getVehicle = require("../controllers/vehicle/getVehicle");
 
 const vehicleRouter = express.Router();
 

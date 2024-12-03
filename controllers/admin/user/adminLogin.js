@@ -7,7 +7,7 @@ const apiResponse = require("../../../utility/apiResponse");
  * Login Controller
  * Handles user authentication.
  */
-const loginController = async (req, res) => {
+const adminLoginController = async (req, res) => {
   const { phone, password } = req.body;
 
   try {
@@ -95,4 +95,4 @@ const loginController = async (req, res) => {
   }
 };
 
-module.exports = loginController;
+module.exports = adminLoginController;
