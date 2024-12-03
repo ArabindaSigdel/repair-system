@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const colors = require("colors"); // For console styling
 const connectDB = require("./config/db");
+const cors = require("cors");
 
 // Load environment variables from .env file
 dotenv.config();
@@ -10,6 +11,8 @@ dotenv.config();
 connectDB();
 
 const app = express();
+
+app.use(cors());
 
 // Middleware to parse incoming JSON
 app.use(express.json());
