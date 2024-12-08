@@ -1,12 +1,12 @@
-const vehicleModel = require("../../../models/vehicle.model");
-const apiResponse = require("../../../utility/apiResponse");
+const { VehicleModel } = require("../../models/index");
+const apiResponse = require("../../utility/apiResponse");
 
 const addVehicle = async (req, res) => {
   const { engine_number, chassis_number, reg_number, brand, color, model } =
     req.body;
 
   try {
-    const newVehicle = await vehicleModel.create({
+    const newVehicle = await VehicleModel.create({
       engine_number: engine_number,
       chassis_number: chassis_number,
       reg_number: reg_number,

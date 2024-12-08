@@ -1,5 +1,5 @@
-const { Vehicle } = require("../../../models/index");
-const apiResponse = require("../../../utility/apiResponse");
+const { Vehicle } = require("../../models/index");
+const apiResponse = require("../../utility/apiResponse");
 
 const getVehicle = async (req, res) => {
   try {

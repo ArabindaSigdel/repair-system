@@ -17,13 +17,15 @@ app.use(cors());
 // Middleware to parse incoming JSON
 app.use(express.json());
 
-// Import routes
-const userRoutes = require("./modules/user/user.routes");
-const vehicleRoutes = require("./modules/vehicle/vehicle.routes");
+// Import routers
+const userRouter = require("./routes/user.routes");
+const vehicleRouter = require("./routes/vehicle.routes");
+const adminRouter = require("./routes/adminUser.routes");
 
 // Use routes
-app.use("/api/users", userRoutes);
-app.use("/api/vehicles", vehicleRoutes);
+app.use("/api/users", userRouter);
+app.use("/api/vehicles", vehicleRouter);
+app.use("/api/admin", adminRouter);
 
 // Start the server
 const PORT = process.env.PORT;
