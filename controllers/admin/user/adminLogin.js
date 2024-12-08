@@ -1,44 +1,44 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { User } = require("../../../models");
-const apiResponse = require("../../utility/apiResponse");
+const { AdminUser } = require("../../../models");
+const apiResponse = require("../../../utility/apiResponse");
 
 /**
  * Login Controller
  * Handles user authentication.
  */
 const adminLoginController = async (req, res) => {
-  const { phone, password } = req.body;
+  const { username, password } = req.body;
 
   try {
     // Input Validation
-    if (!phone || !password) {
+    if (!username || !password) {
       return res.status(400).json(
         apiResponse({
           success: false,
           message: "Validation Error",
           data: {
-            errors: ["phone and password are required"],
+            errors: ["Username and Password are required"],
           },
         })
       );
     }
 
     // Check if the user exists
-    const user = await User.findOne({ phone });
-    if (!user) {
+    const adminUser = await AdminUser.findOne({ username });
+    if (!adminUser) {
       return res.status(401).json(
         apiResponse({
           success: false,
           message: "Authentication Failed",
           data: {
-            errors: ["Invalid phone number"],
+            errors: ["Invalid Username"],
           },
         })
       );
     }
 
-    if (!user.password) {
+    if (!adminUser.password) {
       return res.status(401).json(
         apiResponse({
           success: false,
@@ -51,7 +51,7 @@ const adminLoginController = async (req, res) => {
     }
 
     // Verify the password
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, adminUser.password);
     if (!isMatch) {
       return res.status(401).json(
         apiResponse({
@@ -67,9 +67,9 @@ const adminLoginController = async (req, res) => {
     // Generate a JWT token
     const token = jwt.sign(
       {
-        id: user._id,
-        phone: user.phone,
-        role: user.role,
+        id: adminUser._id,
+        phone: adminUser.phone,
+        role: adminUser.role,
       },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN }
@@ -82,10 +82,9 @@ const adminLoginController = async (req, res) => {
         message: "Login successful",
         data: {
           user: {
-            id: user._id,
-            name: `${user.f_name} ${user.m_name} ${user.l_name}`,
-            phone: user.phone,
-            role: user.role,
+            id: adminUser._id,
+            name: `${adminUser.f_name} ${adminUser.m_name} ${adminUser.l_name}`,
+            role: adminUser.role,
           },
           token,
         },
