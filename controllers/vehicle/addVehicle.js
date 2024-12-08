@@ -1,4 +1,4 @@
-const { vehicleModel } = require("../../models/index");
+const { VehicleModel } = require("../../models/index");
 const apiResponse = require("../../utility/apiResponse");
 
 const addVehicle = async (req, res) => {
@@ -6,7 +6,7 @@ const addVehicle = async (req, res) => {
     req.body;
 
   try {
-    const newVehicle = await vehicleModel.create({
+    const newVehicle = await VehicleModel.create({
       engine_number: engine_number,
       chassis_number: chassis_number,
       reg_number: reg_number,
