@@ -27,13 +27,13 @@ const userRegister = async (req, res) => {
 
     // Create the new user
     const newUser = await User.create({
-      f_name,
-      m_name,
-      l_name,
+      f_name: f_name.trim(),
+      m_name: f_name.trim(),
+      l_name: trim(),
       password: enPassword,
-      address,
-      phone,
-      email,
+      address: address.trim(),
+      phone: phone.trim(),
+      email: email.trim(),
     });
 
     // Success response
