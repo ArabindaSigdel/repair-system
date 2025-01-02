@@ -1,5 +1,5 @@
-const userLogin = require("./controllers/userLogin");
-const userRegister = require("./controllers/userRegister");
+const userLogin = require("../controllers/user/userLogin");
+const userRegister = require("../controllers/user/userRegister");
 
 const express = require("express");
 
