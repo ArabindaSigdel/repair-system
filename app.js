@@ -21,11 +21,13 @@ app.use(express.json());
 const userRouter = require("./routes/user.routes");
 const vehicleRouter = require("./routes/vehicle.routes");
 const adminRouter = require("./routes/adminUser.routes");
+const workshopRouter = require("./routes/workshop.routes");
 
 // Use routes
 app.use("/api/users", userRouter);
 app.use("/api/vehicles", vehicleRouter);
 app.use("/api/admin", adminRouter);
+app.use("/api/workshop", workshopRouter);
 
 // Start the server
 const PORT = process.env.PORT;
