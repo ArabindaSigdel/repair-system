@@ -6,67 +6,77 @@ const bcrypt = require("bcrypt");
 const workshopLoginController = async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    // Validate input
     if (!email || !password) {
       return res.status(400).json(
         apiResponse({
           success: false,
           message: "Validation Error",
-          data: { error: ["Username and Password is required"] },
+          data: { errors: ["Email and Password are required"] },
         })
       );
     }
 
+    // Find the workshop user by email
     const workshopUser = await Workshop.findOne({ email });
-
-    if (workshopUser === null) {
-      return res.status(400).json(
+    if (!workshopUser) {
+      return res.status(401).json(
         apiResponse({
           success: false,
-          message: "Validation Error",
-          data: { error: ["User not found"] },
+          message: "Authentication Failed",
+          data: { errors: ["Invalid email or password"] },
         })
       );
     }
-    console.log("Password: " + password);
+
+    // Compare passwords
     const isMatch = await bcrypt.compare(password, workshopUser.password);
     if (!isMatch) {
       return res.status(401).json(
         apiResponse({
           success: false,
-          message: "Validaion Failed",
-          data: { error: ["Invalid password"] },
+          message: "Authentication Failed",
+          data: { errors: ["Invalid email or password"] },
         })
       );
     }
 
+    // Generate JWT token
     const token = jwt.sign(
       { id: workshopUser._id, role: "workshop" },
-      process.env.JWT_SECRET,
-      { expiresIn: process.env.JWT_EXPIRES_IN }
+      process.env.JWT_SECRET || "default_jwt_secret",
+      { expiresIn: process.env.JWT_EXPIRES_IN || "1h" }
     );
-    res.status(200).json({
-      success: true,
-      message: "Login successfully",
-      data: {
-        workshop: {
-          name: workshopUser.name,
-          email: workshopUser.email,
-          phone: workshopUser.phone,
-          address: workshopUser.address,
-          pan_no: workshopUser.pan_no,
-          reg_no: workshopUser.reg_no,
-          ratings: workshopUser.ratings,
+
+    // Respond with success
+    return res.status(200).json(
+      apiResponse({
+        success: true,
+        message: "Login successful",
+        data: {
+          workshop: {
+            name: workshopUser.name,
+            email: workshopUser.email,
+            phone: workshopUser.phone,
+            address: workshopUser.address,
+            pan_no: workshopUser.pan_no,
+            reg_no: workshopUser.reg_no,
+            ratings: workshopUser.ratings,
+          },
+          token,
         },
-        token,
-      },
-    });
+      })
+    );
   } catch (err) {
-    console.log(err);
-    res.status(500).json({
-      success: false,
-      message: "Internal Server Error",
-      data: {},
-    });
+    console.error(err);
+    return res.status(500).json(
+      apiResponse({
+        success: false,
+        message: "Internal Server Error",
+        data: { errors: [err.message] },
+      })
+    );
   }
 };
 
