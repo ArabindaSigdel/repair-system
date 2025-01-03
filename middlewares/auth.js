@@ -65,7 +65,6 @@ const auth = (allowedRoles = []) => {
       );
     }
   };
-  next();
 };
 
 module.exports = auth;

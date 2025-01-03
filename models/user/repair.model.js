@@ -1,7 +1,12 @@
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 
-repairSchema = mongoose.Schema(
+const repairSchema = mongoose.Schema(
   {
+    customer_id: {
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
+      required: [true, "User Id is required"],
+    },
     vehicle_id: {
       type: mongoose.Schema.ObjectId,
       ref: "Vehicle",
@@ -9,7 +14,7 @@ repairSchema = mongoose.Schema(
     },
     workshop_id: {
       type: mongoose.Schema.ObjectId,
-      required: [true, "Workshop Id is required"],
+      ref: "Workshop",
     },
     repair_description: {
       type: String,
@@ -21,5 +26,9 @@ repairSchema = mongoose.Schema(
       default: "Requested",
     },
   },
-  { timestamps: true }
+  { timestamps: true } // Automatically adds `createdAt` and `updatedAt`
 );
+
+const repairModel = mongoose.model("Repair", repairSchema);
+
+module.exports = repairModel;
