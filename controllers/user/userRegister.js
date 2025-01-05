@@ -22,7 +22,7 @@ const userRegister = async (req, res) => {
     // Hash the password
     const enPassword = await bcrypt.hash(
       password,
-      parseInt(process.env.BCRYPT_SALT_ROUNDS) || 10
+      parseInt(process.env.BCRYPT_SALT_ROUNDS)
     );
 
     // Create the new user

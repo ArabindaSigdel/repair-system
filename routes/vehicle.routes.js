@@ -1,12 +1,14 @@
 const express = require("express");
 const auth = require("../middlewares/auth");
 const addVehicle = require("../controllers/vehicle/addVehicle");
-const { model } = require("mongoose");
 const getVehicle = require("../controllers/vehicle/getVehicle");
 
 const vehicleRouter = express.Router();
 
-vehicleRouter.use(auth);
+// Apply authentication middleware for all routes
+vehicleRouter.use(auth(["Customer"])); // Only customers are allowed for these routes
+
+// Define routes
 vehicleRouter.post("/addVehicle", addVehicle);
 vehicleRouter.get("/getVehicle", getVehicle);
 
