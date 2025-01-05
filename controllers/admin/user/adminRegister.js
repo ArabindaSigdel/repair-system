@@ -55,15 +55,15 @@ const adminRegisterController = async (req, res) => {
 
     //Create User
     const newUser = await AdminUser.create({
-      f_name,
-      m_name,
-      l_name,
-      username,
+      f_name: f_name.trim(),
+      m_name: m_name.trim(),
+      l_name: l_name.trim(),
+      username: username.trim(),
       password: enPassword,
-      address,
-      phone,
-      email,
-      role,
+      address: address.trim(),
+      phone: phone.trim(),
+      email: email.trim(),
+      role: role.trim(),
     });
 
     res.status(200).json(

@@ -44,9 +44,9 @@ const workshopLoginController = async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { id: workshopUser._id, role: "workshop" },
-      process.env.JWT_SECRET || "default_jwt_secret",
-      { expiresIn: process.env.JWT_EXPIRES_IN || "1h" }
+      { id: workshopUser._id, role: "Workshop" },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_EXPIRES_IN }
     );
 
     // Respond with success
