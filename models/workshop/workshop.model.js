@@ -22,6 +22,15 @@ const workshopSchema = mongoose.Schema(
       unique: [true, "Registration No already exists"],
     },
     password: { type: String, required: [true, "Password is required"] },
+    specialization: {
+      type: [String],
+      enum: ["Two Wheeler", "Four Wheeler", "Heavy Vehicle"],
+      validate: {
+        validator: (value) => value.length > 0, // Ensure at least one specialization
+        message: "At least one specialization is required",
+      },
+      required: [true, "Specialization is required"],
+    },    
   },
   { timestamps: true }
 );

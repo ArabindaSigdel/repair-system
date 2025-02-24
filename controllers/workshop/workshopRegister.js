@@ -3,7 +3,7 @@ const { Workshop } = require("../../models/index");
 const apiResponse = require("../../utility/apiResponse");
 
 const workshopRegisterController = async (req, res) => {
-  const { name, email, phone, address, pan_no, reg_no, password } = req.body;
+  const { name, email, phone, address, pan_no, reg_no, password, specialization } = req.body;
   try {
     const workshop = await Workshop.findOne({ email });
     if (workshop) {
@@ -39,6 +39,7 @@ const workshopRegisterController = async (req, res) => {
       pan_no: pan_no.trim(),
       reg_no: reg_no.trim(),
       name: name.trim(),
+      specialization
     });
 
     delete newWorkshop.password;
