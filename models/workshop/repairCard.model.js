@@ -29,7 +29,7 @@ const repairSchema = mongoose.Schema(
       {
         part_id: {
           type: mongoose.Schema.ObjectId,
-          ref: "Part",
+          ref: "Inventory",
           required: true,
         },
         quantity: {
@@ -51,6 +51,6 @@ const repairSchema = mongoose.Schema(
   { timestamps: true } // Automatically adds `createdAt` and `updatedAt`
 );
 
-const repairModel = mongoose.model("Repair", repairSchema);
+const repairModel = mongoose.model("RepairCard", repairSchema);
 
 module.exports = repairModel;

@@ -16,7 +16,7 @@ const billSchema = mongoose.Schema(
       {
         part_id: {
           type: mongoose.Schema.ObjectId,
-          ref: "Part",
+          ref: "Inventory",
           required: true,
         },
         quantity: {
@@ -35,6 +35,12 @@ const billSchema = mongoose.Schema(
           min: [0, "Total must be 0 or more"],
         },
       },
+    ],
+    extra_charges:[
+        {
+            name: {type: String, required: true},
+            price: {type: Number, required: true, min: [0, "Price must be 0 or more"]},
+        },
     ],
     amount: {
       type: Number,

@@ -1,4 +1,4 @@
-const { Repair } = require("./../../models/index");
+const { Repair } = require("../../../models/index");
 
 const acceptRepairRequestController = async (req, res) => {
   try {
