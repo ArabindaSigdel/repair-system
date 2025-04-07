@@ -25,6 +25,28 @@ const repairSchema = mongoose.Schema(
       enum: ["Requested", "Accepted", "Pending", "Completed", "Re-opened"],
       default: "Requested",
     },
+    parts_used: [
+      {
+        part_id: {
+          type: mongoose.Schema.ObjectId,
+          ref: "Part",
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+          min: [1, "Quantity must be at least 1"],
+        },
+        is_covered_by_warrenty: {
+          type: Boolean,
+          default: false,
+        },
+      },
+    ],
+    bill: {
+      type: mongoose.Schema.ObjectId,
+      ref: "Bill",
+    },
   },
   { timestamps: true } // Automatically adds `createdAt` and `updatedAt`
 );
