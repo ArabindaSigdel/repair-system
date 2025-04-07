@@ -13,9 +13,7 @@ const getInventoryItemsController = async (req, res) => {
     if (part_name) {
       const words = part_name.split(" ").filter(Boolean);
       query.part_name = {
-        $and: words.map((word) => ({
-          $regex: new RegExp(word, "i"), // case-insensitive
-        })),
+        $regex: new RegExp(words.join(".*"), "i"), // Matches all words in order
       };
     }
 

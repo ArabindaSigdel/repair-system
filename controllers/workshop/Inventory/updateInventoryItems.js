@@ -12,89 +12,82 @@ const updateInventoryItemsController = async (req, res) => {
     description,
   } = req.body;
 
-  // Validation: Ensure required fields are not empty or invalid
-  if (!part_name || typeof part_name !== "string") {
+  // Validation: Ensure part_id is provided
+  if (!part_id || typeof part_id !== "string") {
     return res.status(400).json({
       success: false,
-      message: "Invalid or missing 'part_name'.",
-      data: {},
-    });
-  }
-
-  if (!part_number || typeof part_number !== "string") {
-    return res.status(400).json({
-      success: false,
-      message: "Invalid or missing 'part_number'.",
-      data: {},
-    });
-  }
-
-  if (!manufacturer || typeof manufacturer !== "string") {
-    return res.status(400).json({
-      success: false,
-      message: "Invalid or missing 'manufacturer'.",
-      data: {},
-    });
-  }
-
-  if (
-    !Array.isArray(compatible_vehicles) ||
-    compatible_vehicles.length === 0 ||
-    !compatible_vehicles.every((v) => typeof v === "string")
-  ) {
-    return res.status(400).json({
-      success: false,
-      message:
-        "Invalid or missing 'compatible_vehicles'. It must be a non-empty array of strings.",
-      data: {},
-    });
-  }
-
-  if (quantity === undefined || typeof quantity !== "number" || quantity < 0) {
-    return res.status(400).json({
-      success: false,
-      message:
-        "Invalid or missing 'quantity'. It must be a non-negative number.",
-      data: {},
-    });
-  }
-
-  if (
-    unit_price === undefined ||
-    typeof unit_price !== "number" ||
-    unit_price < 0
-  ) {
-    return res.status(400).json({
-      success: false,
-      message:
-        "Invalid or missing 'unit_price'. It must be a non-negative number.",
+      message: "Invalid or missing 'part_id'.",
       data: {},
     });
   }
 
   try {
-    // Find the inventory item by part_number, manufacturer, and workshop_id
+    // Find the inventory item by part_id and ensure it belongs to the logged-in workshop
     const existingPart = await Inventory.findOne({
-      part_id,
+      _id: part_id,
       workshop_id: req.user.id, // Ensure it belongs to the logged-in workshop
     });
 
     if (!existingPart) {
       return res.status(404).json({
         success: false,
-        message:
-          "This part does not exist in your workshop. Please add the item instead.",
+        message: "This part does not exist in your workshop.",
         data: {},
       });
     }
 
-    // Update the fields
-    existingPart.part_name = part_name;
-    existingPart.compatible_vehicles = compatible_vehicles;
-    existingPart.quantity_in_stock = quantity;
-    existingPart.unit_price = unit_price;
-    existingPart.description = description;
+    // Update only the fields that are provided in the request body
+    if (part_name !== undefined) {
+      existingPart.part_name = part_name;
+    }
+    if (part_number !== undefined) {
+      existingPart.part_number = part_number;
+    }
+    if (manufacturer !== undefined) {
+      existingPart.manufacturer = manufacturer;
+    }
+    if (compatible_vehicles !== undefined) {
+      if (
+        Array.isArray(compatible_vehicles) &&
+        compatible_vehicles.every((v) => typeof v === "string")
+      ) {
+        existingPart.compatible_vehicles = compatible_vehicles;
+      } else {
+        return res.status(400).json({
+          success: false,
+          message:
+            "'compatible_vehicles' must be a non-empty array of strings.",
+          data: {},
+        });
+      }
+    }
+    if (quantity !== undefined) {
+      if (typeof quantity === "number" && quantity >= 0) {
+        existingPart.quantity_in_stock = quantity;
+      } else {
+        return res.status(400).json({
+          success: false,
+          message: "'quantity' must be a non-negative number.",
+          data: {},
+        });
+      }
+    }
+    if (unit_price !== undefined) {
+      if (typeof unit_price === "number" && unit_price >= 0) {
+        existingPart.unit_price = unit_price;
+      } else {
+        return res.status(400).json({
+          success: false,
+          message: "'unit_price' must be a non-negative number.",
+          data: {},
+        });
+      }
+    }
+    if (description !== undefined) {
+      existingPart.description = description;
+    }
 
+    // Save the updated item
     await existingPart.save();
 
     return res.status(200).json({
