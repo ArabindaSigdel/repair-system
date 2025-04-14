@@ -6,7 +6,7 @@ const userRegister = async (req, res) => {
   const { f_name, m_name, l_name, password, address, phone, email } = req.body;
 
   try {
-    //Validate Password
+    // Validate Password
     const passwordRegex =
       /(?=(.*[0-9]))(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{8,}/;
     if (!passwordRegex.test(password)) {
@@ -67,7 +67,7 @@ const userRegister = async (req, res) => {
             message: `${duplicateField} already exists. Please use a different ${duplicateField}.`,
           });
         }
-        break;
+        return; // Ensure no further code is executed
 
       default:
         // Handle unexpected errors

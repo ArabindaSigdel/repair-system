@@ -3,6 +3,7 @@ const auth = require("../middlewares/auth");
 const addVehicle = require("../controllers/vehicle/addVehicle");
 const getVehicle = require("../controllers/vehicle/getVehicle");
 const addRepairRequest = require("../controllers/repair/addRepairRequest");
+const getUserRepairs = require("../controllers/repair/getUserRepair");
 
 const vehicleRouter = express.Router();
 
@@ -13,5 +14,6 @@ vehicleRouter.use(auth(["Customer"])); // Only customers are allowed for these r
 vehicleRouter.post("/addVehicle", addVehicle);
 vehicleRouter.get("/getVehicle", getVehicle);
 vehicleRouter.post("/addRepairRequest", addRepairRequest);
+vehicleRouter.get("/getUserRepairs", getUserRepairs);
 
 module.exports = vehicleRouter;
