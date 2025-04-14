@@ -3,7 +3,7 @@ const { Repair } = require("../../models/index");
 const getAcceptedRequestController = async (req, res) => {
   try {
     const repairLogs = await Repair.find({
-      status: "Accepted",
+      status: { $in: ["Accepted", "Pending"] },
       workshop_id: req.user.id,
     })
       .populate("customer_id", "f_name m_name l_name email phone address")
@@ -20,6 +20,9 @@ const getAcceptedRequestController = async (req, res) => {
       vehicle_model: repair.vehicle_id?.model || null,
       repair_description: repair.repair_description,
       status: repair.status,
+      parts_used: repair.parts_used,
+      extra_charges: repair.extra_charges,
+      payment_status: repair.payment_status,
       createdAt: repair.createdAt,
       updatedAt: repair.updatedAt,
     })); // Populate user details

@@ -16,12 +16,17 @@ const getUserRepairs = async (req, res) => {
 
     // Flatten the response to avoid nested keys
     const flattenedRepairs = repairs.map((repair) => ({
-      id: repair._id,
+      _id: repair._id,
       vehicle_make: repair.vehicle_id?.brand || null,
       vehicle_model: repair.vehicle_id?.model || null,
       workshop_name: repair.workshop_id?.name || null,
       repair_description: repair.repair_description,
       status: repair.status,
+      parts_used: repair.parts_used,
+      extra_charges: repair.extra_charges,
+      bill_status: repair.bill_status,
+      bill_id: repair.bill_id,
+      payment_status: repair.payment_status,
       createdAt: repair.createdAt,
       updatedAt: repair.updatedAt,
     }));

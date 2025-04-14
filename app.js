@@ -22,12 +22,14 @@ const userRouter = require("./routes/user.routes");
 const vehicleRouter = require("./routes/vehicle.routes");
 const adminRouter = require("./routes/adminUser.routes");
 const workshopRouter = require("./routes/workshop.routes");
+const paymentRouter = require("./routes/payment.routs");
 
 // Use routes
 app.use("/api/users", userRouter);
 app.use("/api/vehicles", vehicleRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/workshop", workshopRouter);
+app.use("/api/payment", paymentRouter);
 
 // Start the server
 const PORT = process.env.PORT;
