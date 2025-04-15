@@ -39,20 +39,20 @@ const updateRepairRequestController = async (req, res) => {
         const part_cost = Number(part.part_cost);
         const quantity = Number(part.quantity);
 
-        if (
-          !part.part_name ||
-          typeof part.part_name !== "string" ||
-          isNaN(part_cost) ||
-          isNaN(quantity)
-        ) {
-          return res.status(400).json({
-            success: false,
-            message: "Invalid parts_used data. Ensure all fields are valid.",
-            data: {
-              invalidPart: part,
-            },
-          });
-        }
+        // if (
+        //   !part.part_name ||
+        //   typeof part.part_name !== "string" ||
+        //   isNaN(part_cost) ||
+        //   isNaN(quantity)
+        // ) {
+        //   return res.status(400).json({
+        //     success: false,
+        //     message: "Invalid parts_used data. Ensure all fields are valid.",
+        //     data: {
+        //       invalidPart: part,
+        //     },
+        //   });
+        // }
 
         validParts.push({
           part_name: part.part_name,
