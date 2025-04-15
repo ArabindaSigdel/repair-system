@@ -7,6 +7,7 @@ const acceptRepairRequestController = require("../controllers/workshop/acceptRep
 const getAcceptedRequestController = require("../controllers/workshop/getAcceptedRequest");
 const updateRepairRequestController = require("../controllers/workshop/updateRepairRequest");
 const generateBillController = require("../controllers/workshop/generateBill");
+const closeRepairRequestController = require("../controllers/workshop/closeRepairRequest");
 const workshopRouter = express.Router();
 
 workshopRouter.post("/register", workshopRegisterController);
@@ -17,6 +18,7 @@ workshopRouter.get("/getAllRepairRequest", getRepairLogController);
 workshopRouter.post("/acceptRepairRequest", acceptRepairRequestController);
 workshopRouter.get("/getAcceptedRequest", getAcceptedRequestController);
 workshopRouter.post("/updateRepairRequest", updateRepairRequestController);
+workshopRouter.post("/closeRepairRequest", closeRepairRequestController);
 workshopRouter.post("/generateBill", generateBillController);
 
 module.exports = workshopRouter;
