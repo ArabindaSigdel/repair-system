@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { Bill } = require("../../models/index.js");
+const { Bill, Repair } = require("../../models/index.js");
 
 const KhaltiCallback = async (req, res) => {
   try {
@@ -43,9 +43,16 @@ const KhaltiCallback = async (req, res) => {
       bill.payment_reference = pidx; // Store the payment reference
       await bill.save();
 
+      // Update the corresponding repair's status to "Completed"
+      const repair = await Repair.findOne({ bill_id: bill._id });
+      if (repair) {
+        repair.status = "Completed";
+        await repair.save();
+      }
+
       return res.status(200).json({
         success: true,
-        message: "Payment verified successfully",
+        message: "Payment verified successfully and repair status updated",
         data: khaltiResponse.data,
       });
     } else {
