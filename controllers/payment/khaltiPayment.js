@@ -40,8 +40,8 @@ const KhaltiPayment = async (req, res) => {
     const khaltiResponse = await axios.post(
       "https://dev.khalti.com/api/v2/epayment/initiate/",
       {
-        return_url: `http://localhost:5000/api/payment/khaltiCallback?bill_id=${bill._id}`,
-        website_url: "http://localhost:5000",
+        return_url: `http://localhost:3000/khaltipayment`,
+        website_url: "http://localhost:3000",
         amount: bill.grand_total * 100, // Convert to paisa
         purchase_order_id: bill._id.toString(),
         purchase_order_name: "Repair Bill Payment",
